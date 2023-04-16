@@ -57,15 +57,25 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Mini\",\r\n    \"edad\": 1,\r\n    \"castrado\": true,\r\n    \"color\": \"Negro\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/gato",
+					"raw": "http://localhost:3000/gato/643c2210f4844c41cb13928d",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"gato"
+						"gato",
+						"643c2210f4844c41cb13928d"
 					]
 				}
 			},
