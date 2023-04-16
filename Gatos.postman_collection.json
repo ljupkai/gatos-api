@@ -6,80 +6,98 @@
 	},
 	"item": [
 		{
-			"name": "Get gatos",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/gato",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"gato"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Insert gato",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Gato\",\r\n    \"edad\": 2,\r\n    \"castrado\": true,\r\n    \"color\": \"Negro\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Gatos",
+			"item": [
+				{
+					"name": "Get gatos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/gato",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"gato"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3000/gato",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"gato"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Modify gato",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Mini\",\r\n    \"edad\": 1,\r\n    \"castrado\": true,\r\n    \"color\": \"Negro\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Insert gato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Donut\",\r\n    \"edad\": \"7 meses\",\r\n    \"castrado\": true,\r\n    \"color\": \"Tabby\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatos_url}}/gato",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"gato"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3000/gato/643c2210f4844c41cb13928d",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"gato",
-						"643c2210f4844c41cb13928d"
-					]
+				{
+					"name": "Delete gato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/gato/borrar/643c25de4596d229f1341f63",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"gato",
+								"borrar",
+								"643c25de4596d229f1341f63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify gato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Mini\",\r\n    \"edad\": 3,\r\n    \"castrado\": true,\r\n    \"color\": \"Negro\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatos_url}}/gato/643c2210f4844c41cb13928d",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"gato",
+								"643c2210f4844c41cb13928d"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }

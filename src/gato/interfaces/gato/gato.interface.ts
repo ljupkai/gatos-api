@@ -1,7 +1,7 @@
 export interface Gato {
   id: string;
   nombre: string;
-  edad: number;
+  edad: string;
   castrado: boolean;
   color: string;
   descripcion: string;

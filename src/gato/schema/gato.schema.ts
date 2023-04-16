@@ -8,9 +8,10 @@ export const GatoSchema = new mongoose.Schema({
     trim: true,
   },
   edad: {
-    type: Number,
-    min: 0,
-    max: 25,
+    type: String,
+    required: true,
+    minlength: 5,
+    trim: true,
   },
   castrado: {
     type: Boolean,

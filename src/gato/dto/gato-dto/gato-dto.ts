@@ -1,11 +1,19 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsBoolean,
+  IsInt,
+  IsEnum,
+} from 'class-validator';
 
 export class GatoDto {
   @IsString()
   @IsNotEmpty()
   readonly nombre: string;
   @IsNotEmpty()
-  readonly edad: number;
+  @IsString()
+  readonly edad: string;
+  @IsBoolean()
   readonly castrado: boolean;
   @IsString()
   @IsNotEmpty()
@@ -13,9 +21,11 @@ export class GatoDto {
   @IsNotEmpty()
   @IsString()
   readonly descripcion: string;
+  @IsBoolean()
   readonly reservado: boolean;
   readonly personalidad: string[];
   readonly numLikes: number;
+  @IsBoolean()
   readonly adoptado: boolean;
   //fotos: fotoAdopcion[];
   //usuarioID: Usuario
