@@ -10,15 +10,15 @@ export class GatoDto {
   @IsString()
   @IsNotEmpty()
   readonly nombre: string;
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   readonly edad: string;
   @IsBoolean()
   readonly castrado: boolean;
   @IsString()
-  @IsNotEmpty()
+  // @IsNotEmpty()
   readonly color: string;
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   readonly descripcion: string;
   @IsBoolean()
@@ -27,6 +27,6 @@ export class GatoDto {
   readonly numLikes: number;
   @IsBoolean()
   readonly adoptado: boolean;
-  //fotos: fotoAdopcion[];
-  //usuarioID: Usuario
+  readonly imagen: string[];
+  //dueño: usuarioId
 }

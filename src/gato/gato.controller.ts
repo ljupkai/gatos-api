@@ -1,7 +1,17 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { GatoDto } from './dto/gato-dto/gato-dto';
 import { GatoService } from './gato.service';
 import { Gato } from './interfaces/gato/gato.interface';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('gato')
 export class GatoController {
@@ -9,13 +19,13 @@ export class GatoController {
 
   //Get /gato
   @Get()
-  async listar() {
+  async listarGatos() {
     return await this.gatoService.listar();
   }
 
   //GET /gato/buscar/:id
-  @Get()
-  async buscarPorId(@Param('id') id: string) {
+  @Get(':id')
+  async buscarGatoPorId(@Param('id') id: string) {
     try {
       const resultado = await this.gatoService.buscarPorId(id);
       if (resultado) return { resultado: resultado };
@@ -27,13 +37,24 @@ export class GatoController {
 
   //POST /gato
   @Post()
-  async crear(@Body() crearGatoDto: GatoDto) {
-    return await this.gatoService.insertar(crearGatoDto);
+  @UseInterceptors(
+    FileInterceptor('imagen', {
+      storage: diskStorage({
+        destination: 'public/uploads/',
+        filename: function (req, file, callback) {
+          callback(null, Date.now().toString() + file.originalname);
+        },
+      }),
+    }),
+  )
+  async crearGato(@Body() body, @UploadedFile() file: Express.Multer.File) {
+    if (file) body.imagen = '/' + file.destination + file.filename;
+    return await this.gatoService.insertar(body);
   }
 
   //PUT /gato/:id
   @Post(':id')
-  async actualizar(
+  async actualizarGato(
     @Param('id') id: string,
     @Body() actualizarGatoDto: GatoDto,
   ) {
@@ -42,7 +63,7 @@ export class GatoController {
 
   //DELETE /gato/:id
   @Post('borrar/:id')
-  async borrar(@Param('id') id: string) {
+  async borrarGato(@Param('id') id: string) {
     return await this.gatoService.borrar(id);
   }
 }

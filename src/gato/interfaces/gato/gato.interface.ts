@@ -9,6 +9,6 @@ export interface Gato {
   personalidad: string[];
   numLikes: number;
   adoptado: boolean;
-  //fotos: fotoAdopcion[];
-  //usuarioID: Usuario
+  imagen: string[];
+  //dueño: Usuario
 }

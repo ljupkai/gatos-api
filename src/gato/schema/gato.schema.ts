@@ -9,13 +9,13 @@ export const GatoSchema = new mongoose.Schema({
   },
   edad: {
     type: String,
-    required: true,
+    // required: true,
     minlength: 5,
     trim: true,
   },
   castrado: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
   color: {
     type: String,
@@ -28,7 +28,7 @@ export const GatoSchema = new mongoose.Schema({
   },
   reservado: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
   personalidad: {
     type: [String],
@@ -38,5 +38,8 @@ export const GatoSchema = new mongoose.Schema({
   },
   adoptado: {
     type: Boolean,
+  },
+  imagen: {
+    type: [String],
   },
 });
