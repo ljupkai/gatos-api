@@ -6,16 +6,20 @@ import {
   Body,
   UseInterceptors,
   UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { GatoDto } from './dto/gato-dto/gato-dto';
 import { GatoService } from './gato.service';
 import { Gato } from './interfaces/gato/gato.interface';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+// import { ImageService } from 'src/commons/image/image.service';
 
 @Controller('gato')
 export class GatoController {
-  constructor(private readonly gatoService: GatoService) {}
+  constructor(
+    private readonly gatoService: GatoService, // private readonly imageService: ImageService,
+  ) {}
 
   //Get /gato
   @Get()
@@ -35,23 +39,6 @@ export class GatoController {
     }
   }
 
-  //POST /gato
-  @Post()
-  @UseInterceptors(
-    FileInterceptor('imagen', {
-      storage: diskStorage({
-        destination: 'public/uploads/',
-        filename: function (req, file, callback) {
-          callback(null, Date.now().toString() + file.originalname);
-        },
-      }),
-    }),
-  )
-  async crearGato(@Body() body, @UploadedFile() file: Express.Multer.File) {
-    if (file) body.imagen = '/' + file.destination + file.filename;
-    return await this.gatoService.insertar(body);
-  }
-
   //PUT /gato/:id
   @Post(':id')
   async actualizarGato(
@@ -65,5 +52,29 @@ export class GatoController {
   @Post('borrar/:id')
   async borrarGato(@Param('id') id: string) {
     return await this.gatoService.borrar(id);
+  }
+
+  //POST /gato
+  @Post()
+  @UseInterceptors(
+    FilesInterceptor('imagenes[]', 10, {
+      storage: diskStorage({
+        destination: 'public/uploads/',
+        filename: function (_req, file, callback) {
+          callback(null, Date.now().toString() + file.originalname);
+        },
+      }),
+    }),
+  )
+  async crearGato(
+    @Body() body,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    console.log(files);
+    const fileNames = files.map(
+      (file) => '/' + file.destination + file.filename,
+    );
+    body.imagen = fileNames;
+    return await this.gatoService.insertar(body);
   }
 }
