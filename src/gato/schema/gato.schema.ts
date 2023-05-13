@@ -1,5 +1,21 @@
 import * as mongoose from 'mongoose';
 
+const AdopcionSchema = new mongoose.Schema({
+  usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario',
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'aprobado', 'rechazado'],
+    default: 'pending',
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 export const GatoSchema = new mongoose.Schema({
   nombre: {
     type: String,
@@ -41,5 +57,8 @@ export const GatoSchema = new mongoose.Schema({
   },
   imagen: {
     type: [String],
+  },
+  adopcion: {
+    type: AdopcionSchema,
   },
 });
