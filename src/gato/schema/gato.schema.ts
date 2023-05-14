@@ -7,7 +7,7 @@ const AdopcionSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'aprobado', 'rechazado'],
+    enum: ['pending', 'reservado', 'rechazado'],
     default: 'pending',
   },
   date: {
@@ -48,6 +48,7 @@ export const GatoSchema = new mongoose.Schema({
   },
   personalidad: {
     type: [String],
+    enum: ['solo', 'gatos', 'perros']
   },
   numLikes: {
     type: Number,

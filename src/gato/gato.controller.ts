@@ -77,4 +77,6 @@ export class GatoController {
     body.imagen = fileNames;
     return await this.gatoService.insertar(body);
   }
+
+  //TODO añadir métodos del subdocumento
 }

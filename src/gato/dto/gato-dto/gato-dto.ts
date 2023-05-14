@@ -29,4 +29,6 @@ export class GatoDto {
   readonly adoptado: boolean;
   readonly imagen: string[];
   //dueño: usuarioId
+
+  readonly adopcion: string;
 }

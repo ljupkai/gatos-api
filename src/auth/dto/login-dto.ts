@@ -9,10 +9,10 @@ export class LoginDto {
 
   @IsString()
   @IsNotEmpty()
-  @Transform((p) =>
-    p.value && typeof p.value === 'string'
-      ? crypto.createHash('sha256').update(p.value, 'utf-8').digest('base64')
-      : p.value,
-  )
+  // @Transform((p) =>
+  //   p.value && typeof p.value === 'string'
+  //     ? crypto.createHash('sha256').update(p.value, 'utf-8').digest('base64')
+  //     : p.value,
+  // )
   readonly password: string;
 }
