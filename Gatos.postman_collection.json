@@ -26,13 +26,31 @@
 					"response": []
 				},
 				{
+					"name": "Get gato",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/gato/643c2684eaf7ceedf19d114a",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"gato",
+								"643c2684eaf7ceedf19d114a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Insert gato",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Donut\",\r\n    \"edad\": \"7 meses\",\r\n    \"castrado\": true,\r\n    \"color\": \"Tabby\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
+							"raw": "{\r\n    \"nombre\": \"PRUEBA3\",\r\n    \"edad\": \"6 años\",\r\n    \"castrado\": false,\r\n    \"color\": \"Gris\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -57,14 +75,14 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{gatos_url}}/gato/borrar/643c25de4596d229f1341f63",
+							"raw": "{{gatos_url}}/gato/borrar/64527bfc53bf72b173f1092c",
 							"host": [
 								"{{gatos_url}}"
 							],
 							"path": [
 								"gato",
 								"borrar",
-								"643c25de4596d229f1341f63"
+								"64527bfc53bf72b173f1092c"
 							]
 						}
 					},
@@ -77,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Mini\",\r\n    \"edad\": 3,\r\n    \"castrado\": true,\r\n    \"color\": \"Negro\",\r\n    \"descripcion\": \"Muy mimoso\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Mini\",\r\n    \"edad\": \"3 años\",\r\n    \"castrado\": true,\r\n    \"color\": \"Blanco y negro\",\r\n    \"descripcion\": \"Pequeña\",\r\n    \"reservado\": false,\r\n    \"adoptado\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -85,13 +103,213 @@
 							}
 						},
 						"url": {
-							"raw": "{{gatos_url}}/gato/643c2210f4844c41cb13928d",
+							"raw": "{{gatos_url}}/gato/643c2684eaf7ceedf19d114a",
 							"host": [
 								"{{gatos_url}}"
 							],
 							"path": [
 								"gato",
-								"643c2210f4844c41cb13928d"
+								"643c2684eaf7ceedf19d114a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Get usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/usuario",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get usuario por id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatos_url}}/usuario/buscar/6460d674003fe92a8b4433f4",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario",
+								"buscar",
+								"6460d674003fe92a8b4433f4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"nombre\": \"Bosco\", \"correo\": \"bosco.com\", \"password\": \"bosco\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatos_url}}/usuario",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/usuario/borrar/:id",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario",
+								"borrar",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/usuario/:id",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get usuario por correo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/usuario/email/aby@aby.com",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario",
+								"email",
+								"aby@aby.com"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get usuario por nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gatos_url}}/usuario/nombre/Aby",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"usuario",
+								"nombre",
+								"Aby"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"aby@aby.com\", \"password\": \"aby\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatos_url}}/auth/login",
+							"host": [
+								"{{gatos_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
 							]
 						}
 					},
