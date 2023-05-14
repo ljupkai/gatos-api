@@ -1,20 +1,20 @@
 import * as mongoose from 'mongoose';
 
-const AdopcionSchema = new mongoose.Schema({
-  usuario: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario',
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'reservado', 'rechazado'],
-    default: 'pending',
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+// const AdopcionSchema = new mongoose.Schema({
+//   usuario: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: 'Usuario',
+//   },
+//   status: {
+//     type: String,
+//     enum: ['pending', 'reservado', 'rechazado'],
+//     default: 'pending',
+//   },
+//   date: {
+//     type: Date,
+//     default: Date.now,
+//   },
+// });
 
 export const GatoSchema = new mongoose.Schema({
   nombre: {
@@ -48,7 +48,7 @@ export const GatoSchema = new mongoose.Schema({
   },
   personalidad: {
     type: [String],
-    enum: ['solo', 'gatos', 'perros']
+    enum: ['solo', 'gatos', 'perros'],
   },
   numLikes: {
     type: Number,
@@ -59,7 +59,7 @@ export const GatoSchema = new mongoose.Schema({
   imagen: {
     type: [String],
   },
-  adopcion: {
-    type: AdopcionSchema,
-  },
+  // adopcion: {
+  //   type: AdopcionSchema,
+  // },
 });

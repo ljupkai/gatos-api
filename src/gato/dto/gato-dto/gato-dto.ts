@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsInt,
   IsEnum,
+  IsOptional,
 } from 'class-validator';
 
 export class GatoDto {
@@ -27,8 +28,9 @@ export class GatoDto {
   readonly numLikes: number;
   @IsBoolean()
   readonly adoptado: boolean;
+  @IsOptional()
   readonly imagen: string[];
   //dueño: usuarioId
-
-  readonly adopcion: string;
+  //   @IsOptional()
+  //   readonly adopcion: string;
 }

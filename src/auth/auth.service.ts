@@ -14,8 +14,8 @@ export class AuthService {
 
   async login(user: LoginDto): Promise<any> {
     const usuario = await this.usuarioService.buscarPorCorreo(user.email);
-    if (usuario) {
-      const payload = { sub: usuario.id };
+    if (usuario && usuario.password === user.password) {
+      const payload = { sub: usuario };
       return {
         access_token: this.jwtService.sign(payload),
       };

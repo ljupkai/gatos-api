@@ -7,12 +7,14 @@ import {
   UseInterceptors,
   UploadedFile,
   UploadedFiles,
+  UseGuards,
 } from '@nestjs/common';
 import { GatoDto } from './dto/gato-dto/gato-dto';
 import { GatoService } from './gato.service';
 import { Gato } from './interfaces/gato/gato.interface';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 // import { ImageService } from 'src/commons/image/image.service';
 
 @Controller('gato')
@@ -56,6 +58,7 @@ export class GatoController {
 
   //POST /gato
   @Post()
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FilesInterceptor('imagenes[]', 10, {
       storage: diskStorage({
@@ -70,11 +73,12 @@ export class GatoController {
     @Body() body,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    console.log(files);
-    const fileNames = files.map(
-      (file) => '/' + file.destination + file.filename,
-    );
-    body.imagen = fileNames;
+    if (files) {
+      const fileNames = files.map(
+        (file) => '/' + file.destination + file.filename,
+      );
+      body.imagen = fileNames;
+    }
     return await this.gatoService.insertar(body);
   }
 
