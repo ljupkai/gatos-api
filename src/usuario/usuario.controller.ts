@@ -49,9 +49,9 @@ export class UsuarioController {
     }
   }
 
-  //Post /usuario
-  @Post()
-  async crearUsuario(@Body() body) {
-    return await this.usuarioService.insertar(body);
+  //DELETE /usuario/borrar/:id
+  @Post('borrar/:id')
+  async borrarUsuario(@Param('id') id: string) {
+    return await this.usuarioService.borrar(id);
   }
 }

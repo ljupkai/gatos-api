@@ -50,7 +50,7 @@ export class GatoController {
     return await this.gatoService.actualizar(id, actualizarGatoDto);
   }
 
-  //DELETE /gato/:id
+  //DELETE /gato/borrar/:id
   @Post('borrar/:id')
   async borrarGato(@Param('id') id: string) {
     return await this.gatoService.borrar(id);
