@@ -34,9 +34,11 @@ export class GatoController {
   async buscarGatoPorId(@Param('id') id: string) {
     try {
       const resultado = await this.gatoService.buscarPorId(id);
+      console.log(resultado);
       if (resultado) return { resultado: resultado };
       throw new Error();
     } catch (Error) {
+      console.log(Error);
       return { error: 'Error buscando al gato' };
     }
   }
@@ -83,4 +85,16 @@ export class GatoController {
   }
 
   //TODO añadir métodos del subdocumento
+
+  //Añadir adopción
+  @Post('adopcion/:idGato')
+  async nuevaAdopcion(@Body() body, @Param('idGato') idGato: string) {
+    try {
+      const resultado = await this.gatoService.solicitarAdopcion(idGato, body);
+      if (resultado) return { resultado: resultado };
+      throw new Error();
+    } catch (Error) {
+      return { error: 'Error iniciando la adopción' };
+    }
+  }
 }
