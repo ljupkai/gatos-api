@@ -14,5 +14,5 @@ export class RegistroDto {
   @IsNotEmpty()
   password: string;
 
-  isAdmin: true;
+  roles: string[];
 }

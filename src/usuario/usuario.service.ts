@@ -35,5 +35,20 @@ export class UsuarioService {
     return await this.usuarioModel.findByIdAndRemove(id).exec();
   }
 
-  //TODO actualizarUsuario
+  async actualizar(
+    id: string,
+    actualizarUsuarioDto: UsuarioDto,
+  ): Promise<Usuario> {
+    return await this.usuarioModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            roles: actualizarUsuarioDto.roles,
+          },
+        },
+        { new: true, runValidators: true },
+      )
+      .exec();
+  }
 }

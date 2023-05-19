@@ -1,14 +1,18 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/security/roles.guard';
+import { Role } from 'src/security/roles.enum';
+import { Roles } from 'src/security/roles.decorator';
+import { UsuarioDto } from './dto/usuario-dto';
 
 @Controller('usuario')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.Admin)
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
-
   //Get /usuario
   @Get()
-  @UseGuards(JwtAuthGuard)
   async listarUsuarios() {
     return await this.usuarioService.listar();
   }
@@ -47,6 +51,15 @@ export class UsuarioController {
     } catch (Error) {
       return { error: 'Error buscando al usuario' };
     }
+  }
+
+  //PUT /usuario/:id
+  @Post(':id')
+  async actualizarUsuario(
+    @Param('id') id: string,
+    @Body() actualizarUsuarioDto: UsuarioDto,
+  ) {
+    return await this.usuarioService.actualizar(id, actualizarUsuarioDto);
   }
 
   //DELETE /usuario/borrar/:id

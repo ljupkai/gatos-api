@@ -3,5 +3,5 @@ export interface Usuario {
   nombre: string;
   correo: string;
   password: string;
-  isAdmin: boolean;
+  roles: string[];
 }

@@ -15,6 +15,9 @@ import { Gato } from './interfaces/gato/gato.interface';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/security/roles.decorator';
+import { Role } from 'src/security/roles.enum';
+import { RolesGuard } from 'src/security/roles.guard';
 // import { ImageService } from 'src/commons/image/image.service';
 
 @Controller('gato')
@@ -60,7 +63,8 @@ export class GatoController {
 
   //POST /gato
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @UseInterceptors(
     FilesInterceptor('imagenes[]', 10, {
       storage: diskStorage({
@@ -83,8 +87,6 @@ export class GatoController {
     }
     return await this.gatoService.insertar(body);
   }
-
-  //TODO añadir métodos del subdocumento
 
   //Añadir adopción
   @Post('adopcion/:idGato')

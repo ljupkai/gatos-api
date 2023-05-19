@@ -5,6 +5,8 @@ import { GatoModule } from './gato/gato.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './security/roles.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [

@@ -17,7 +17,7 @@ export const UsuarioSchema = new mongoose.Schema({
     minlength: 3,
     required: true,
   },
-  isAdmin: {
-    type: Boolean,
+  roles: {
+    type: [String],
   },
 });
