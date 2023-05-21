@@ -20,4 +20,10 @@ export const UsuarioSchema = new mongoose.Schema({
   roles: {
     type: [String],
   },
+  favoritos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Gato',
+    },
+  ],
 });

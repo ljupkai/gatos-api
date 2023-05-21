@@ -52,6 +52,7 @@ export const GatoSchema = new mongoose.Schema({
   },
   numLikes: {
     type: Number,
+    default: 0,
   },
   adoptado: {
     type: Boolean,

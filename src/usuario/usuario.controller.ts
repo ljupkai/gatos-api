@@ -7,11 +7,11 @@ import { Roles } from 'src/security/roles.decorator';
 import { UsuarioDto } from './dto/usuario-dto';
 
 @Controller('usuario')
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.Admin)
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
   //Get /usuario
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @Get()
   async listarUsuarios() {
     return await this.usuarioService.listar();

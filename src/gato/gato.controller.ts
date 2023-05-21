@@ -18,12 +18,14 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/security/roles.decorator';
 import { Role } from 'src/security/roles.enum';
 import { RolesGuard } from 'src/security/roles.guard';
+import { UsuarioService } from 'src/usuario/usuario.service';
 // import { ImageService } from 'src/commons/image/image.service';
 
 @Controller('gato')
 export class GatoController {
   constructor(
-    private readonly gatoService: GatoService, // private readonly imageService: ImageService,
+    private readonly gatoService: GatoService,
+    private readonly usuarioService: UsuarioService, // private readonly imageService: ImageService,
   ) {}
 
   //Get /gato
@@ -97,6 +99,28 @@ export class GatoController {
       throw new Error();
     } catch (Error) {
       return { error: 'Error iniciando la adopción' };
+    }
+  }
+
+  //POST gato/idGato/idUser/like
+  @Post(':idGato/:idUser/like')
+  async marcarLike(
+    @Param('idUser') idUser: string,
+    @Param('idGato') idGato: string,
+  ) {
+    try {
+      const usuario = await this.usuarioService.buscarPorId(idUser);
+      if (!usuario) {
+        throw new Error('Usuario no existe');
+      }
+      if (usuario.favoritos && usuario.favoritos.includes(idGato)) {
+        throw new Error('El gato ya existe en los favoritos');
+      }
+      await this.usuarioService.likeGato(idUser, idGato);
+      await this.gatoService.incrementarLikes(idGato);
+      return { message: 'Gato añadido en favoritos y likes incrementados' };
+    } catch (error) {
+      console.log(error, 'Error marcando like');
     }
   }
 }

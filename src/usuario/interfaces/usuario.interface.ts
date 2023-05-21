@@ -4,4 +4,5 @@ export interface Usuario {
   correo: string;
   password: string;
   roles: string[];
+  favoritos: string[];
 }
