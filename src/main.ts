@@ -1,9 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { join } from 'path';
+import { json } from 'express';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
 
@@ -15,6 +18,13 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  // app.useStaticAssets(join(__dirname, '..', 'public', 'uploads'), {
+  //   prefix: '/public',
+  // });
+  app.use(json({ limit: '5mb' }));
+
+  app.useStaticAssets(join(__dirname, '..', 'node_modules/bootstrap/dist'));
 
   await app.listen(3000);
 }

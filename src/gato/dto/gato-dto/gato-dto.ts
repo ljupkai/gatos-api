@@ -30,6 +30,8 @@ export class GatoDto {
   readonly adoptado: boolean;
   @IsOptional()
   readonly imagen: string[];
+  @IsOptional()
+  readonly likedBy: string[];
   //dueño: usuarioId
   //   @IsOptional()
   //   readonly adopcion: string;

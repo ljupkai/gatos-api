@@ -5,4 +5,6 @@ export interface Usuario {
   password: string;
   roles: string[];
   favoritos: string[];
+  imagenes: string[];
+  me?: boolean;
 }

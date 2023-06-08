@@ -34,12 +34,11 @@ export class GatoController {
     return await this.gatoService.listar();
   }
 
-  //GET /gato/buscar/:id
+  //GET /gato/:id
   @Get(':id')
   async buscarGatoPorId(@Param('id') id: string) {
     try {
       const resultado = await this.gatoService.buscarPorId(id);
-      console.log(resultado);
       if (resultado) return { resultado: resultado };
       throw new Error();
     } catch (Error) {
@@ -65,10 +64,10 @@ export class GatoController {
 
   //POST /gato
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin)
   @UseInterceptors(
-    FilesInterceptor('imagenes[]', 10, {
+    FilesInterceptor('imagen[]', 10, {
       storage: diskStorage({
         destination: 'public/uploads/',
         filename: function (_req, file, callback) {
@@ -90,7 +89,7 @@ export class GatoController {
     return await this.gatoService.insertar(body);
   }
 
-  //Añadir adopción
+  //Solicitar adopción
   @Post('adopcion/:idGato')
   async nuevaAdopcion(@Body() body, @Param('idGato') idGato: string) {
     try {
@@ -99,6 +98,19 @@ export class GatoController {
       throw new Error();
     } catch (Error) {
       return { error: 'Error iniciando la adopción' };
+    }
+  }
+
+  //Get adopciones por usuario
+  @Get(':idUser/adopcion')
+  async getAdopcionesPorUsuario(@Param('idUser') idUser: string) {
+    try {
+      const resultado = await this.gatoService.getAdopcionesPorUsuario(idUser);
+      if (resultado) {
+        return { resultado: resultado };
+      }
+    } catch (error) {
+      console.log(error, 'Error en get adopciones por usuario');
     }
   }
 
@@ -118,6 +130,7 @@ export class GatoController {
       }
       await this.usuarioService.likeGato(idUser, idGato);
       await this.gatoService.incrementarLikes(idGato);
+      await this.gatoService.anyadirLikedBy(idGato, idUser);
       return { message: 'Gato añadido en favoritos y likes incrementados' };
     } catch (error) {
       console.log(error, 'Error marcando like');

@@ -77,15 +77,36 @@ export class GatoService {
       .exec();
   }
 
+  /**Servicio para extraer adopciones solicitadas por un usuario */
+  async getAdopcionesPorUsuario(idUser: string): Promise<Gato[]> {
+    try {
+      const gatos = await this.gatoModel
+        .find({ Adopciones: { $elemMatch: { usuario: idUser } } })
+        .exec();
+      console.log(gatos);
+      return gatos;
+    } catch (error) {
+      throw new Error('Ha habido un error buscando adopciones por usuario');
+    }
+  }
+
   /**Servicio para incrementar contador de likes */
   async incrementarLikes(id: string): Promise<Gato> {
-    try{
-    return await this.gatoModel.findByIdAndUpdate(id, {
-      $inc: {
-        numLikes: 1,
-      },
-    });
-  }catch (error) {
-    console.log(error, 'Error incrementando likes')
-  }}
+    try {
+      return await this.gatoModel.findByIdAndUpdate(id, {
+        $inc: {
+          numLikes: 1,
+        },
+      });
+    } catch (error) {
+      console.log(error, 'Error incrementando likes');
+    }
+  }
+
+  /**Servicio para añadir usuarios que han marcado el gato como favorito */
+  async anyadirLikedBy(id: string, usuarioId: string): Promise<Gato> {
+    return await this.gatoModel
+      .findByIdAndUpdate(id, { $addToSet: { likedBy: usuarioId } })
+      .exec();
+  }
 }

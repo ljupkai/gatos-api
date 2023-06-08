@@ -15,4 +15,7 @@ export class RegistroDto {
   password: string;
 
   roles: string[];
+
+  favoritos: string[];
+  imagenes: string[];
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Usuario } from './interfaces/usuario.interface';
-import { UsuarioDto } from './dto/usuario-dto';
+import { EncuestaDto, UsuarioDto } from './dto/usuario-dto';
 import { Model } from 'mongoose';
 import { Gato } from 'src/gato/interfaces/gato/gato.interface';
 
@@ -42,17 +42,21 @@ export class UsuarioService {
     return await this.usuarioModel.findByIdAndRemove(id).exec();
   }
 
-  /**Servicio para atualizar el rol de un usuario */
+  /**Servicio para actualizar los datos de registro de un usuario */
   async actualizar(
     id: string,
-    actualizarRolUsuarioDto: UsuarioDto,
+    actualizarUsuarioDto: UsuarioDto,
   ): Promise<Usuario> {
     return await this.usuarioModel
       .findByIdAndUpdate(
         id,
         {
           $set: {
-            roles: actualizarRolUsuarioDto.roles,
+            nombre: actualizarUsuarioDto.nombre,
+            roles: actualizarUsuarioDto.roles,
+            correo: actualizarUsuarioDto.correo,
+            favoritos: actualizarUsuarioDto.favoritos,
+            imagenes: actualizarUsuarioDto.imagenes,
           },
         },
         { new: true, runValidators: true },
@@ -60,7 +64,43 @@ export class UsuarioService {
       .exec();
   }
 
-  /**Servicio para anyadir un gato en favoritos */
+  /**Servicio para actualizar la encuesta de un usuario */
+  async actualizarEncuesta(
+    id: string,
+    actualizarUsuarioEncuesta: EncuestaDto,
+  ): Promise<Usuario> {
+    console.log(id);
+    console.log(actualizarUsuarioEncuesta);
+    return await this.usuarioModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            nombreCompleto: actualizarUsuarioEncuesta.nombreCompleto,
+            direccion: actualizarUsuarioEncuesta.direccion,
+            telefono: actualizarUsuarioEncuesta.telefono,
+            infoMudanza: actualizarUsuarioEncuesta.infoMudanza,
+            infoPorque: actualizarUsuarioEncuesta.infoPorque,
+            infoFamilia: actualizarUsuarioEncuesta.infoFamilia,
+            infoCostes: actualizarUsuarioEncuesta.infoCostes,
+            infoAbandonar: actualizarUsuarioEncuesta.infoAbandonar,
+            infoMovimiento: actualizarUsuarioEncuesta.infoMovimiento,
+            infoProteccion: actualizarUsuarioEncuesta.infoProteccion,
+            infoExperiencia: actualizarUsuarioEncuesta.infoExperiencia,
+            infoProblemas: actualizarUsuarioEncuesta.infoProblemas,
+            infoMascotasActuales:
+              actualizarUsuarioEncuesta.infoMascotasActuales,
+            infoMascotasAnteriores:
+              actualizarUsuarioEncuesta.infoMascotasAnteriores,
+            infoVeterinario: actualizarUsuarioEncuesta.infoVeterinario,
+          },
+        },
+        { new: true, runValidators: true },
+      )
+      .exec();
+  }
+
+  /**Servicio para anyadir un gato a favoritos */
   async likeGato(id: string, gatoId: string): Promise<Usuario> {
     return await this.usuarioModel
       .findByIdAndUpdate(id, { $addToSet: { favoritos: gatoId } })

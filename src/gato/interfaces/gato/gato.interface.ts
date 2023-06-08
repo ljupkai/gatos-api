@@ -10,5 +10,6 @@ export interface Gato {
   numLikes: number;
   adoptado: boolean;
   imagen: string[];
+  likedBy: string[];
   //dueño: Usuario
 }
