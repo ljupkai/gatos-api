@@ -82,7 +82,7 @@ export class GatoController {
     } else {
       resultado = await this.gatoService.unmarkGatoAsReserved(idGato);
     }
-    return { resultado: resultado };
+    return resultado;
   }
 
   //Solicitar adopción
