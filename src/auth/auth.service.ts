@@ -35,8 +35,10 @@ export class AuthService {
       const passIsValid = await bcrypt.compare(user.password, usuario.password);
       if (passIsValid) {
         const payload = { sub: usuario };
+        const roles = usuario.roles;
         return {
           access_token: this.jwtService.sign(payload),
+          roles: roles,
         };
       }
     } else throw new UnauthorizedException();

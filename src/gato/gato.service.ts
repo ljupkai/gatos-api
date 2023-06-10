@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Gato } from './interfaces/gato/gato.interface';
+import { Adopcion, Gato } from './interfaces/gato/gato.interface';
 import { GatoDto } from './dto/gato-dto/gato-dto';
 import { AdopcionDto } from './dto/gato-dto/adopcion-dto';
 
@@ -13,7 +13,10 @@ export class GatoService {
 
   /**Servicio para listar gatos */
   async listar(): Promise<Gato[]> {
-    return await this.gatoModel.find().exec();
+    return await this.gatoModel
+      .find()
+      .populate('Adopciones.usuario', 'nombre')
+      .exec();
   }
 
   /**Servicio para buscar un gato por id */
@@ -82,8 +85,8 @@ export class GatoService {
     try {
       const gatos = await this.gatoModel
         .find({ Adopciones: { $elemMatch: { usuario: idUser } } })
+        .populate('Adopciones.usuario', 'nombre')
         .exec();
-      console.log(gatos);
       return gatos;
     } catch (error) {
       throw new Error('Ha habido un error buscando adopciones por usuario');
@@ -108,5 +111,45 @@ export class GatoService {
     return await this.gatoModel
       .findByIdAndUpdate(id, { $addToSet: { likedBy: usuarioId } })
       .exec();
+  }
+
+  /**Servicio para listar gatos juntos con las encuestas de los usuarios */
+  async listarGatosConDatosUsuario(): Promise<Gato[]> {
+    return await this.gatoModel
+      .find()
+      .populate(
+        'Adopciones.usuario',
+        'nombre nombreCompleto direccion telefono infoMudanza infoPorque infoFamilia infoCostes infoAbandonar infoMovimiento infoProteccion infoExperiencia infoProblemas infoMascotasActuales infoMascotasAnteriores infoVeterinario',
+      )
+      .exec();
+  }
+
+  /**Servicio para cambiar el status de una adopción */
+  async updateAdoptionStatus(adopcionId: string, status: string): Promise<any> {
+    return await this.gatoModel
+      .findOneAndUpdate(
+        { 'Adopciones._id': adopcionId },
+        { $set: { 'Adopciones.$.status': status } },
+        { new: true },
+      )
+      .exec();
+  }
+
+  /**Servicio que marca un gato como reservado */
+  async marcarReservado(id: string): Promise<Gato> {
+    return await this.gatoModel.findByIdAndUpdate(
+      id,
+      { reservado: true },
+      { new: true },
+    );
+  }
+
+  /**Servicio que quita la marca de reservado */
+  async unmarkGatoAsReserved(gatoId: string): Promise<Gato> {
+    return await this.gatoModel.findByIdAndUpdate(
+      gatoId,
+      { reservado: false },
+      { new: true },
+    );
   }
 }

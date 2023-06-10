@@ -115,4 +115,28 @@ export class UsuarioService {
       .exec();
     return usuario.favoritos;
   }
+
+  /**Servicio para extraer la encuesta de un usuario */
+  async getEncuesta(userId: string): Promise<any> {
+    return this.usuarioModel
+      .findById(userId)
+      .select({
+        nombreCompleto: 1,
+        direccion: 1,
+        telefono: 1,
+        infoMudanza: 1,
+        infoPorque: 1,
+        infoFamilia: 1,
+        infoCostes: 1,
+        infoAbandonar: 1,
+        infoMovimiento: 1,
+        infoProteccion: 1,
+        infoExperiencia: 1,
+        infoProblemas: 1,
+        infoMascotasActuales: 1,
+        infoMascotasAnteriores: 1,
+        infoVeterinario: 1,
+      })
+      .exec();
+  }
 }

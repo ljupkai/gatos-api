@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsOptional,
 } from 'class-validator';
+import { AdopcionDto } from './adopcion-dto';
 
 export class GatoDto {
   @IsString()
@@ -35,4 +36,6 @@ export class GatoDto {
   //dueño: usuarioId
   //   @IsOptional()
   //   readonly adopcion: string;
+  @IsOptional()
+  readonly Adopciones: AdopcionDto[];
 }

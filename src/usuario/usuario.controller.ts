@@ -28,7 +28,7 @@ export class UsuarioController {
 
   //Get /usuario/buscar/:id
   @UseGuards(JwtAuthGuard)
-  @Get('buscar/:id')
+  @Get(':id')
   async buscarUsuarioPorId(@AuthUser() usuario: any, @Param('id') id: string) {
     try {
       const resultado = await this.usuarioService.buscarPorId(id);
@@ -92,5 +92,18 @@ export class UsuarioController {
   @Post('borrar/:id')
   async borrarUsuario(@Param('id') id: string) {
     return await this.usuarioService.borrar(id);
+  }
+
+  //GET /usuario/:id/favoritos
+  @Get(':id/favoritos')
+  async getFavoritos(@Param('id') id: string) {
+    return await this.usuarioService.listarUsuarioFavs(id);
+  }
+
+  //GET /usuario/:id/encuesta
+  @Get(':id/encuesta')
+  async getEncuesta(@Param('id') id: string) {
+    const resultado = await this.usuarioService.getEncuesta(id);
+    return { resultado: resultado };
   }
 }

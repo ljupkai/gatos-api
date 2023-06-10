@@ -34,6 +34,13 @@ export class GatoController {
     return await this.gatoService.listar();
   }
 
+  //Get /gato
+  @Get('/userdata')
+  async listarGatosConUserdata() {
+    const resultado = await this.gatoService.listarGatosConDatosUsuario();
+    return { resultado: resultado };
+  }
+
   //GET /gato/:id
   @Get(':id')
   async buscarGatoPorId(@Param('id') id: string) {
@@ -62,31 +69,20 @@ export class GatoController {
     return await this.gatoService.borrar(id);
   }
 
-  //POST /gato
-  @Post()
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles(Role.Admin)
-  @UseInterceptors(
-    FilesInterceptor('imagen[]', 10, {
-      storage: diskStorage({
-        destination: 'public/uploads/',
-        filename: function (_req, file, callback) {
-          callback(null, Date.now().toString() + file.originalname);
-        },
-      }),
-    }),
-  )
-  async crearGato(
-    @Body() body,
-    @UploadedFiles() files: Array<Express.Multer.File>,
+  // Cambiar el status de la adopción, si es reservado, cambiar el status del gato en reservado
+  @Post(':idGato/adopciones/:adopcionId/:status')
+  async cambiarStatus(
+    @Param('adopcionId') id: string,
+    @Param('status') status: string,
+    @Param('idGato') idGato: string,
   ) {
-    if (files) {
-      const fileNames = files.map(
-        (file) => '/' + file.destination + file.filename,
-      );
-      body.imagen = fileNames;
+    let resultado = await this.gatoService.updateAdoptionStatus(id, status);
+    if (status === 'reservado') {
+      resultado = await this.gatoService.marcarReservado(idGato);
+    } else {
+      resultado = await this.gatoService.unmarkGatoAsReserved(idGato);
     }
-    return await this.gatoService.insertar(body);
+    return { resultado: resultado };
   }
 
   //Solicitar adopción
@@ -128,12 +124,39 @@ export class GatoController {
       if (usuario.favoritos && usuario.favoritos.includes(idGato)) {
         throw new Error('El gato ya existe en los favoritos');
       }
-      await this.usuarioService.likeGato(idUser, idGato);
+      const resultado = await this.usuarioService.likeGato(idUser, idGato);
       await this.gatoService.incrementarLikes(idGato);
       await this.gatoService.anyadirLikedBy(idGato, idUser);
-      return { message: 'Gato añadido en favoritos y likes incrementados' };
+      return { resultado: resultado };
     } catch (error) {
       console.log(error, 'Error marcando like');
     }
+  }
+
+  //POST /gato
+  @Post()
+  // @UseGuards(JwtAuthGuard)
+  // @Roles(Role.Admin)
+  @UseInterceptors(
+    FilesInterceptor('imagen[]', 10, {
+      storage: diskStorage({
+        destination: 'public/uploads/',
+        filename: function (_req, file, callback) {
+          callback(null, Date.now().toString() + file.originalname);
+        },
+      }),
+    }),
+  )
+  async crearGato(
+    @Body() body,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    if (files) {
+      const fileNames = files.map(
+        (file) => '/' + file.destination + file.filename,
+      );
+      body.imagen = fileNames;
+    }
+    return await this.gatoService.insertar(body);
   }
 }

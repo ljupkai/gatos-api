@@ -11,5 +11,13 @@ export interface Gato {
   adoptado: boolean;
   imagen: string[];
   likedBy: string[];
+  Adopciones: Adopcion[];
   //dueño: Usuario
+}
+
+export interface Adopcion {
+  id: string;
+  usuario: string;
+  status: string;
+  fecha: Date;
 }
