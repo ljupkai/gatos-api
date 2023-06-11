@@ -13,7 +13,8 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     GatoModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1/gatos'),
+    // MongooseModule.forRoot('mongodb://127.0.0.1/gatos'),
+    MongooseModule.forRoot('mongodb://mongodb/gatos'),
     UsuarioModule,
     AuthModule,
     // ServeStaticModule.forRoot({
