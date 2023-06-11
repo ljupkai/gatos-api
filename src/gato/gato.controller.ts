@@ -77,7 +77,12 @@ export class GatoController {
     @Param('idGato') idGato: string,
   ) {
     let resultado = await this.gatoService.updateAdoptionStatus(id, status);
-    if (status === 'reservado') {
+
+    const gato = await this.gatoService.buscarPorId(idGato);
+    const hasReservedAdoption = gato.Adopciones.some((adopcion) => {
+      return adopcion.id === id && adopcion.status === 'reservado';
+    });
+    if (hasReservedAdoption) {
       resultado = await this.gatoService.marcarReservado(idGato);
     } else {
       resultado = await this.gatoService.unmarkGatoAsReserved(idGato);
